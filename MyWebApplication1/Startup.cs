@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace MyWebApplication1
 {
@@ -26,8 +27,18 @@ namespace MyWebApplication1
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(routes => 
+            app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "calculator",
+                    template: "Calculator/{action}/{number:int}",
+                    defaults: new { Controller = "Calculator" });
+
+                routes.MapRoute(
+                    name: "messages",
+                    template: "say/{**message}",
+                    defaults: new {controller = "Message", action = "ShowMessage"});
+                
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Hello}/{action=Index}/{id?}");
