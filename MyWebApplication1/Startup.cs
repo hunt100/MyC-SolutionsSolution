@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using MyWebApplication1.Data;
 
 namespace MyWebApplication1
 {
@@ -16,6 +17,7 @@ namespace MyWebApplication1
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MoviesContext>(options => { options.UseSqlite("Filename=movies.db"); });
             services.AddMvc();
         }
 
@@ -33,7 +35,7 @@ namespace MyWebApplication1
                     name: "default",
                     template: "{controller=Hello}/{action=Index}/{id?}");
             });
-
+            
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             //app.Run(async (context) =>
