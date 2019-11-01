@@ -1,16 +1,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using MyWebApplication1.Models;
 using MyWebApplication1.Models.Movies;
 
 namespace MyWebApplication1.Data
 {
-    public class MoviesContext : DbContext
+    public class DataContext : DbContext
     {
-        public MoviesContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions options) : base(options)
         {
         }
         
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
