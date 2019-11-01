@@ -7,7 +7,7 @@ using MyWebApplication1.Data;
 
 namespace MyWebApplication1.Migrations
 {
-    [DbContext(typeof(MoviesContext))]
+    [DbContext(typeof(DataContext))]
     partial class MoviesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -15,6 +15,48 @@ namespace MyWebApplication1.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CommentAuthorId");
+
+                    b.Property<string>("CommentDescription");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("PostId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentAuthorId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Like", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("LikeAuthorId");
+
+                    b.Property<int?>("LikePostId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LikeAuthorId");
+
+                    b.HasIndex("LikePostId");
+
+                    b.ToTable("Likes");
+                });
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Movie", b =>
                 {
@@ -38,7 +80,7 @@ namespace MyWebApplication1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = -1,
+                            Id = 1,
                             Author = "Todd Phillips",
                             CreatedAt = new DateTime(2019, 10, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Genre = "Crime , Drama , Thriller",
@@ -47,7 +89,7 @@ namespace MyWebApplication1.Migrations
                         },
                         new
                         {
-                            Id = -2,
+                            Id = 2,
                             Author = "David Leitch",
                             CreatedAt = new DateTime(2019, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Genre = "Action , Adventure",
@@ -56,7 +98,7 @@ namespace MyWebApplication1.Migrations
                         },
                         new
                         {
-                            Id = -3,
+                            Id = 3,
                             Author = "Jon Favreau",
                             CreatedAt = new DateTime(2019, 7, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Genre = "Adventure , Animation , Drama , Family , Musical",
@@ -65,13 +107,163 @@ namespace MyWebApplication1.Migrations
                         },
                         new
                         {
-                            Id = -4,
+                            Id = 4,
                             Author = "Joachim Rønning",
                             CreatedAt = new DateTime(2019, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Genre = "Adventure , Family , Fantasy",
                             Name = "Maleficent: Mistress of Evil",
                             Poster = "https://dz7u9q3vpd4eo.cloudfront.net/admin-uploads/posters/mxt_movies_poster/maleficent-mistress-of-evil_c8507e61-a6b3-404d-b8c5-df6f74bc62be_poster.png?d=270x360&q=20"
                         });
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PhotoUrl");
+
+                    b.Property<int?>("PostId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("PostAuthorId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostAuthorId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("Color");
+
+                    b.Property<int?>("PostId");
+
+                    b.Property<string>("TagName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Age");
+
+                    b.Property<string>("AvatarUrl");
+
+                    b.Property<string>("Biography");
+
+                    b.Property<DateTime>("Born");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<DateTime>("Joined");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("Patronymic");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Comment", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.Profile", "CommentAuthor")
+                        .WithMany()
+                        .HasForeignKey("CommentAuthorId");
+
+                    b.HasOne("MyWebApplication1.Models.Movies.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Like", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.Profile", "LikeAuthor")
+                        .WithMany()
+                        .HasForeignKey("LikeAuthorId");
+
+                    b.HasOne("MyWebApplication1.Models.Movies.Post", "LikePost")
+                        .WithMany("Likes")
+                        .HasForeignKey("LikePostId");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Photo", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.Movies.Post", "Post")
+                        .WithMany("Photos")
+                        .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Post", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.Profile", "PostAuthor")
+                        .WithMany()
+                        .HasForeignKey("PostAuthorId");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Movies.Tag", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.Movies.Post")
+                        .WithMany("Tags")
+                        .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.Profile", b =>
+                {
+                    b.HasOne("MyWebApplication1.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

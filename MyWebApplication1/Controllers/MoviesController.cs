@@ -11,9 +11,9 @@ namespace MyWebApplication1
 {
     public class MoviesController : Controller
     {
-        private readonly MoviesContext _dbContext;
+        private readonly DataContext _dbContext;
 
-        public MoviesController(MoviesContext dbContext)
+        public MoviesController(DataContext dbContext)
         {
             _dbContext = dbContext;
         }
