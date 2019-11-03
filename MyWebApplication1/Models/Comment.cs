@@ -14,8 +14,12 @@ namespace MyWebApplication1.Models.Movies
         [Display(Name = "Comment Created At")]
         public DateTime CreatedAt { get; set; }
         
+        public int PostId { get; set; }
+        
         [Display(Name = "Comment on Post")]
         public virtual Post Post { get; set; }
+
+        public int ProfileId { get; set; }
         
         [Display(Name = "Comment Author")]
         public virtual Profile CommentAuthor { get; set; }

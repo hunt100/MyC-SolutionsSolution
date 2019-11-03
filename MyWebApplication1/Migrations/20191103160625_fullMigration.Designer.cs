@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyWebApplication1.Data;
 
 namespace MyWebApplication1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class MoviesContextModelSnapshot : ModelSnapshot
+    [Migration("20191103160625_fullMigration")]
+    partial class fullMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,19 +23,19 @@ namespace MyWebApplication1.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CommentAuthorId");
-
                     b.Property<string>("CommentDescription");
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<int?>("PostId");
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("ProfileId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentAuthorId");
-
                     b.HasIndex("PostId");
+
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Comments");
                 });
@@ -45,15 +47,15 @@ namespace MyWebApplication1.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("LikeAuthorId");
+                    b.Property<int>("PostId");
 
-                    b.Property<int?>("LikePostId");
+                    b.Property<int>("ProfileId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LikeAuthorId");
+                    b.HasIndex("PostId");
 
-                    b.HasIndex("LikePostId");
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Likes");
                 });
@@ -76,44 +78,6 @@ namespace MyWebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "Todd Phillips",
-                            CreatedAt = new DateTime(2019, 10, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Crime , Drama , Thriller",
-                            Name = "Joker",
-                            Poster = "https://dz7u9q3vpd4eo.cloudfront.net/admin-uploads/posters/mxt_movies_poster/joker_dabf394a-d4f2-4b68-90e2-011ed6b54012_poster.png?d=270x360&q=20"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Author = "David Leitch",
-                            CreatedAt = new DateTime(2019, 8, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Action , Adventure",
-                            Name = "Fast & Furious Presents: Hobbs & Shaw",
-                            Poster = "https://dz7u9q3vpd4eo.cloudfront.net/admin-uploads/posters/mxt_movies_poster/fast-furious-presents-hobbs-shaw_14d1ab4f-c90c-46d1-9e04-f7d69f285ebd_poster.png?d=270x360&q=20"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Author = "Jon Favreau",
-                            CreatedAt = new DateTime(2019, 7, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Adventure , Animation , Drama , Family , Musical",
-                            Name = "The Lion King",
-                            Poster = "https://dz7u9q3vpd4eo.cloudfront.net/admin-uploads/posters/mxt_movies_poster/the-lion-king_3904aadc-3a07-4836-892f-763b2dfdeea3_poster.png?d=270x360&q=20"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Author = "Joachim Rønning",
-                            CreatedAt = new DateTime(2019, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Adventure , Family , Fantasy",
-                            Name = "Maleficent: Mistress of Evil",
-                            Poster = "https://dz7u9q3vpd4eo.cloudfront.net/admin-uploads/posters/mxt_movies_poster/maleficent-mistress-of-evil_c8507e61-a6b3-404d-b8c5-df6f74bc62be_poster.png?d=270x360&q=20"
-                        });
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Photo", b =>
@@ -123,7 +87,7 @@ namespace MyWebApplication1.Migrations
 
                     b.Property<string>("PhotoUrl");
 
-                    b.Property<int?>("PostId");
+                    b.Property<int>("PostId");
 
                     b.HasKey("Id");
 
@@ -141,11 +105,11 @@ namespace MyWebApplication1.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int?>("PostAuthorId");
+                    b.Property<int>("ProfileId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostAuthorId");
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Posts");
                 });
@@ -157,15 +121,26 @@ namespace MyWebApplication1.Migrations
 
                     b.Property<int?>("Color");
 
-                    b.Property<int?>("PostId");
-
                     b.Property<string>("TagName");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("MyWebApplication1.Models.PostTagConnection", b =>
+                {
+                    b.Property<int>("TagId");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("Id");
+
+                    b.HasKey("TagId", "PostId");
+
                     b.HasIndex("PostId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("PostTagConnection");
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Profile", b =>
@@ -191,11 +166,12 @@ namespace MyWebApplication1.Migrations
 
                     b.Property<string>("Patronymic");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Profiles");
                 });
@@ -218,52 +194,65 @@ namespace MyWebApplication1.Migrations
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Comment", b =>
                 {
-                    b.HasOne("MyWebApplication1.Models.Profile", "CommentAuthor")
-                        .WithMany()
-                        .HasForeignKey("CommentAuthorId");
-
                     b.HasOne("MyWebApplication1.Models.Movies.Post", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MyWebApplication1.Models.Profile", "CommentAuthor")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Like", b =>
                 {
-                    b.HasOne("MyWebApplication1.Models.Profile", "LikeAuthor")
-                        .WithMany()
-                        .HasForeignKey("LikeAuthorId");
-
                     b.HasOne("MyWebApplication1.Models.Movies.Post", "LikePost")
                         .WithMany("Likes")
-                        .HasForeignKey("LikePostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MyWebApplication1.Models.Profile", "LikeAuthor")
+                        .WithMany("Likes")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Photo", b =>
                 {
                     b.HasOne("MyWebApplication1.Models.Movies.Post", "Post")
                         .WithMany("Photos")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Movies.Post", b =>
                 {
                     b.HasOne("MyWebApplication1.Models.Profile", "PostAuthor")
-                        .WithMany()
-                        .HasForeignKey("PostAuthorId");
+                        .WithMany("Posts")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MyWebApplication1.Models.Movies.Tag", b =>
+            modelBuilder.Entity("MyWebApplication1.Models.PostTagConnection", b =>
                 {
-                    b.HasOne("MyWebApplication1.Models.Movies.Post")
-                        .WithMany("Tags")
-                        .HasForeignKey("PostId");
+                    b.HasOne("MyWebApplication1.Models.Movies.Post", "Post")
+                        .WithMany("PostTagConnections")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MyWebApplication1.Models.Movies.Tag", "Tag")
+                        .WithMany("PostTagConnections")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MyWebApplication1.Models.Profile", b =>
                 {
                     b.HasOne("MyWebApplication1.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("Profile")
+                        .HasForeignKey("MyWebApplication1.Models.Profile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

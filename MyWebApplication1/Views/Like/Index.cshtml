@@ -19,6 +19,12 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.LikeAuthor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikePost)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
             <th></th>
@@ -27,6 +33,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikeAuthor.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikePost.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>

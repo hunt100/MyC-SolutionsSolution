@@ -10,6 +10,8 @@ namespace MyWebApplication1.Models.Movies
         [Display(Name = "PhotoUrl")]
         public string PhotoUrl { get; set; }
         
+        public int PostId { get; set; }
+        
         [Display(Name = "Photo on Post")]
         public Post Post { get; set; }
     }

@@ -22,7 +22,8 @@ namespace MyWebApplication1.Controllers
         // GET: Photo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Photos.ToListAsync());
+            var dataContext = _context.Photos.Include(p => p.Post);
+            return View(await dataContext.ToListAsync());
         }
 
         // GET: Photo/Details/5
@@ -34,6 +35,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var photo = await _context.Photos
+                .Include(p => p.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (photo == null)
             {
@@ -46,6 +48,7 @@ namespace MyWebApplication1.Controllers
         // GET: Photo/Create
         public IActionResult Create()
         {
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PhotoUrl")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,PhotoUrl,PostId")] Photo photo)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace MyWebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", photo.PostId);
             return View(photo);
         }
 
@@ -78,6 +82,7 @@ namespace MyWebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", photo.PostId);
             return View(photo);
         }
 
@@ -86,7 +91,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PhotoUrl")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PhotoUrl,PostId")] Photo photo)
         {
             if (id != photo.Id)
             {
@@ -113,6 +118,7 @@ namespace MyWebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", photo.PostId);
             return View(photo);
         }
 
@@ -125,6 +131,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var photo = await _context.Photos
+                .Include(p => p.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (photo == null)
             {

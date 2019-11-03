@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MyWebApplication1.Models.Movies;
 
 namespace MyWebApplication1.Models
 {
@@ -34,9 +36,16 @@ namespace MyWebApplication1.Models
         
         [Display(Name = "Profile Avatar Url")]
         public string AvatarUrl { get; set; }
+        public int UserId { get; set; }
         
         [Display(Name = "Profile User ref")]
         public virtual User User { get; set; }
+        
+        public ICollection<Post> Posts { get; set; }
+        
+        public ICollection<Comment> Comments { get; set; }
+        
+        public ICollection<Like> Likes { get; set; }
         
     }
 }

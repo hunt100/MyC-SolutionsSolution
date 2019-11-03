@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyWebApplication1.Models.Movies
@@ -17,5 +18,8 @@ namespace MyWebApplication1.Models.Movies
         
         [Display(Name = "Tag Color")]
         public Color? Color { get; set; }
+        
+        [Display(Name = "Posts List")]
+        public virtual ICollection<PostTagConnection> PostTagConnections { get; set; }
     }
 }

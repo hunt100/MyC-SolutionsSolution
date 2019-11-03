@@ -22,7 +22,8 @@ namespace MyWebApplication1.Controllers
         // GET: Profile
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Profiles.ToListAsync());
+            var dataContext = _context.Profiles.Include(p => p.User);
+            return View(await dataContext.ToListAsync());
         }
 
         // GET: Profile/Details/5
@@ -34,6 +35,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var profile = await _context.Profiles
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profile == null)
             {
@@ -46,6 +48,7 @@ namespace MyWebApplication1.Controllers
         // GET: Profile/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Patronymic,Age,Biography,City,Joined,Born,AvatarUrl")] Profile profile)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Patronymic,Age,Biography,City,Joined,Born,AvatarUrl,UserId")] Profile profile)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace MyWebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", profile.UserId);
             return View(profile);
         }
 
@@ -78,6 +82,7 @@ namespace MyWebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", profile.UserId);
             return View(profile);
         }
 
@@ -86,7 +91,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Patronymic,Age,Biography,City,Joined,Born,AvatarUrl")] Profile profile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Patronymic,Age,Biography,City,Joined,Born,AvatarUrl,UserId")] Profile profile)
         {
             if (id != profile.Id)
             {
@@ -113,6 +118,7 @@ namespace MyWebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", profile.UserId);
             return View(profile);
         }
 
@@ -125,6 +131,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var profile = await _context.Profiles
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profile == null)
             {

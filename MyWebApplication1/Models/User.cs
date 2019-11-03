@@ -15,5 +15,7 @@ namespace MyWebApplication1.Models
         
         [Display(Name = "Active status")]
         public bool Active { get; set; }
+        
+        public Profile Profile { get; set; }
     }
 }

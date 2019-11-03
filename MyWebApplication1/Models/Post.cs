@@ -14,12 +14,14 @@ namespace MyWebApplication1.Models.Movies
         
         [Display(Name = "Post Description")]
         public string Description { get; set; }
+
+        public int ProfileId { get; set; }
         
         [Display(Name = "Post Author")]
         public virtual Profile PostAuthor { get; set; }
         
         [Display(Name = "Tags List")]
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<PostTagConnection> PostTagConnections { get; set; }
         
         [Display(Name = "Comments List")]
         public virtual ICollection<Comment> Comments { get; set; }
