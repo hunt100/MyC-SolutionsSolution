@@ -22,7 +22,8 @@ namespace MyWebApplication1.Controllers
         // GET: Comment
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Comments.ToListAsync());
+            var dataContext = _context.Comments.Include(c => c.CommentAuthor).Include(c => c.Post);
+            return View(await dataContext.ToListAsync());
         }
 
         // GET: Comment/Details/5
@@ -34,6 +35,8 @@ namespace MyWebApplication1.Controllers
             }
 
             var comment = await _context.Comments
+                .Include(c => c.CommentAuthor)
+                .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comment == null)
             {
@@ -46,6 +49,8 @@ namespace MyWebApplication1.Controllers
         // GET: Comment/Create
         public IActionResult Create()
         {
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CommentDescription,CreatedAt")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Id,CommentDescription,CreatedAt,PostId,ProfileId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace MyWebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -78,6 +85,8 @@ namespace MyWebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -86,7 +95,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CommentDescription,CreatedAt")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CommentDescription,CreatedAt,PostId,ProfileId")] Comment comment)
         {
             if (id != comment.Id)
             {
@@ -113,6 +122,8 @@ namespace MyWebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -125,6 +136,8 @@ namespace MyWebApplication1.Controllers
             }
 
             var comment = await _context.Comments
+                .Include(c => c.CommentAuthor)
+                .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comment == null)
             {

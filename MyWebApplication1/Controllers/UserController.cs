@@ -25,6 +25,17 @@ namespace MyWebApplication1.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult IsAdminUser(string login)
+        {
+            if (login == "admin")
+            {
+                return Json(false);
+            }
+
+            return Json(true);
+        }
+        
         // GET: User/Details/5
         public async Task<IActionResult> Details(int? id)
         {

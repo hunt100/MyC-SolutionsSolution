@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyWebApplication1.Models.Movies
@@ -13,9 +14,13 @@ namespace MyWebApplication1.Models.Movies
         public int Id { get; set; }
         
         [Display(Name = "Tag Name")]
+        [Required(ErrorMessage = "Tag can't be empty'")]
         public string TagName { get; set; }
         
         [Display(Name = "Tag Color")]
         public Color? Color { get; set; }
+        
+        [Display(Name = "Posts List")]
+        public virtual ICollection<PostTagConnection> PostTagConnections { get; set; }
     }
 }

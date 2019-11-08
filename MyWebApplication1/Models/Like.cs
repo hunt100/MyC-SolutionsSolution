@@ -7,8 +7,12 @@ namespace MyWebApplication1.Models.Movies
         [Display(Name = "Id")]
         public int Id { get; set; }
         
+        public int ProfileId { get; set; }
+        
         [Display(Name = "Like Author")]
         public virtual Profile LikeAuthor{ get; set; }
+        
+        public int PostId { get; set; }
         
         [Display(Name = "Like Post")]
         public virtual Post LikePost{ get; set; }

@@ -22,7 +22,8 @@ namespace MyWebApplication1.Controllers
         // GET: Like
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Likes.ToListAsync());
+            var dataContext = _context.Likes.Include(l => l.LikeAuthor).Include(l => l.LikePost);
+            return View(await dataContext.ToListAsync());
         }
 
         // GET: Like/Details/5
@@ -34,6 +35,8 @@ namespace MyWebApplication1.Controllers
             }
 
             var like = await _context.Likes
+                .Include(l => l.LikeAuthor)
+                .Include(l => l.LikePost)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (like == null)
             {
@@ -46,6 +49,8 @@ namespace MyWebApplication1.Controllers
         // GET: Like/Create
         public IActionResult Create()
         {
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Active")] Like like)
+        public async Task<IActionResult> Create([Bind("Id,ProfileId,PostId,Active")] Like like)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace MyWebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", like.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", like.PostId);
             return View(like);
         }
 
@@ -78,6 +85,8 @@ namespace MyWebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", like.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", like.PostId);
             return View(like);
         }
 
@@ -86,7 +95,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Active")] Like like)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProfileId,PostId,Active")] Like like)
         {
             if (id != like.Id)
             {
@@ -113,6 +122,8 @@ namespace MyWebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", like.ProfileId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", like.PostId);
             return View(like);
         }
 
@@ -125,6 +136,8 @@ namespace MyWebApplication1.Controllers
             }
 
             var like = await _context.Likes
+                .Include(l => l.LikeAuthor)
+                .Include(l => l.LikePost)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (like == null)
             {

@@ -22,7 +22,8 @@ namespace MyWebApplication1.Controllers
         // GET: Post
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posts.ToListAsync());
+            var dataContext = _context.Posts.Include(p => p.PostAuthor).Include(p => p.PostTagConnections).ThenInclude(p => p.Tag);
+            return View(await dataContext.ToListAsync());
         }
 
         // GET: Post/Details/5
@@ -34,6 +35,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var post = await _context.Posts
+                .Include(p => p.PostAuthor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
@@ -46,6 +48,7 @@ namespace MyWebApplication1.Controllers
         // GET: Post/Create
         public IActionResult Create()
         {
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CreatedAt,Description")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,CreatedAt,Description,ProfileId")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace MyWebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
             return View(post);
         }
 
@@ -78,6 +82,7 @@ namespace MyWebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
             return View(post);
         }
 
@@ -86,7 +91,7 @@ namespace MyWebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CreatedAt,Description")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CreatedAt,Description,ProfileId")] Post post)
         {
             if (id != post.Id)
             {
@@ -113,6 +118,7 @@ namespace MyWebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
             return View(post);
         }
 
@@ -125,6 +131,7 @@ namespace MyWebApplication1.Controllers
             }
 
             var post = await _context.Posts
+                .Include(p => p.PostAuthor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {

@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhotoUrl)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,6 +32,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PhotoUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Post.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
