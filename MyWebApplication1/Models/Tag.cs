@@ -14,6 +14,7 @@ namespace MyWebApplication1.Models.Movies
         public int Id { get; set; }
         
         [Display(Name = "Tag Name")]
+        [Required(ErrorMessage = "Tag can't be empty'")]
         public string TagName { get; set; }
         
         [Display(Name = "Tag Color")]

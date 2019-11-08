@@ -9,6 +9,7 @@ namespace MyWebApplication1.Models.Movies
         public int Id { get; set; }
         
         [Display(Name = "Comment Description")]
+        [Required(ErrorMessage = "Comment can't be empty'")]
         public string CommentDescription { get; set; }
         
         [Display(Name = "Comment Created At")]
