@@ -23,8 +23,14 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
-                    @Html.ActionLink("10+5", "Sum", "Calculator", new { firstNumber = 10, secondNumber = 5 }, new { @class = "navbar-item" })
-                    @Html.ActionLink("10+23", "Sum", "Calculator", new { firstNumber = 10, secondNumber = 23 }, new { @class = "navbar-item" })
+                    @Html.ActionLink("User", "Index", "User") |
+                        @Html.ActionLink("Profile", "Index", "Profile") |
+                        @Html.ActionLink("Post", "Index", "Post") |
+                        @Html.ActionLink("Photo", "Index", "Photo") |
+                        @Html.ActionLink("Tag", "Index", "Tag") |
+                        @Html.ActionLink("Like", "Index", "Like") |
+                        @Html.ActionLink("Comment", "Index", "Comment") |
+                        <a href="https://stackoverflow.com/questions/357929/is-it-important-to-unit-test-a-constructor">Is it important to unit test a constructor? (check link)</a>
                 </div>
 
                 <div class="navbar-end">
@@ -40,41 +46,15 @@
 <div class="container">
     @RenderBody()
 </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <p>&copy; 2019 - MyWebApplication1 </p>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-@* *@
-@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
-@*     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-@* *@
-@* <environment include="Development"> *@
-@*         <script src="~/lib/jquery/dist/jquery.js"></script> *@
-@*         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> *@
-@*         <script src="~/js/site.js" asp-append-version="true"></script> *@
-@*     </environment> *@
-@*     <environment exclude="Development"> *@
-@*         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js" *@
-@*                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js" *@
-@*                 asp-fallback-test="window.jQuery" *@
-@*                 crossorigin="anonymous" *@
-@*                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"> *@
-@*         </script> *@
-@*         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" *@
-@*                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js" *@
-@*                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" *@
-@*                 crossorigin="anonymous" *@
-@*                 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"> *@
-@*         </script> *@
-@*         <script src="~/js/site.min.js" asp-append-version="true"></script> *@
-@*     </environment> *@
-@* *@
-@*     @RenderSection("script", required: false) *@
+<footer class="border-top footer text-muted">
+    <div class="container">
+        <p>&copy; 2019 - MyWebApplication1 </p>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", required: false)
 </body>
 </html>
 

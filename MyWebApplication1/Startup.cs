@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyWebApplication1.Data;
+using MyWebApplication1.Services;
 
 namespace MyWebApplication1
 {
@@ -19,6 +20,8 @@ namespace MyWebApplication1
         {
             services.AddDbContext<DataContext>(options => { options.UseSqlite("Filename=movies.db"); });
             services.AddMvc();
+            services.AddScoped<LikeService>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
