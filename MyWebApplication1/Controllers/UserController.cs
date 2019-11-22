@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyWebApplication1.Areas.Identity.Data;
 using MyWebApplication1.Data;
 using MyWebApplication1.Models;
 
@@ -13,16 +16,27 @@ namespace MyWebApplication1.Controllers
     public class UserController : Controller
     {
         private readonly DataContext _context;
-
+        private readonly MyWebApplication1IdentityDbContext _secContext;
+        private readonly UserManager<IdentityUser> userManager;
+        //private readonly RoleManager<>
         public UserController(DataContext context)
         {
             _context = context;
         }
-
+        
         // GET: User
+        [Authorize(Roles = "Role_amidn")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(await _context.Users.ToListAsync());    
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            
         }
 
         [AcceptVerbs("Get", "Post")]

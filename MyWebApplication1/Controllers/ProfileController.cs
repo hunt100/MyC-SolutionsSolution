@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace MyWebApplication1.Controllers
         }
 
         // GET: Profile
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var dataContext = _context.Profiles.Include(p => p.User);

@@ -7,41 +7,42 @@
     <link rel="stylesheet" href="~/css/bulma.min.css">
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    <strong class="title">My app</strong>
-                </a>
+    <partial name="_LoginPartial"/>
+<div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong class="title">My app</strong>
+            </a>
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                @Html.ActionLink("User", "Index", "User") |
+                @Html.ActionLink("Profile", "Index", "Profile") |
+                @Html.ActionLink("Post", "Index", "Post") |
+                @Html.ActionLink("Photo", "Index", "Photo") |
+                @Html.ActionLink("Tag", "Index", "Tag") |
+                @Html.ActionLink("Like", "Index", "Like") |
+                @Html.ActionLink("Comment", "Index", "Comment") |
+                <a href="https://stackoverflow.com/questions/357929/is-it-important-to-unit-test-a-constructor">Is it important to unit test a constructor? (check link)</a>
             </div>
 
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    @Html.ActionLink("User", "Index", "User") |
-                        @Html.ActionLink("Profile", "Index", "Profile") |
-                        @Html.ActionLink("Post", "Index", "Post") |
-                        @Html.ActionLink("Photo", "Index", "Photo") |
-                        @Html.ActionLink("Tag", "Index", "Tag") |
-                        @Html.ActionLink("Like", "Index", "Like") |
-                        @Html.ActionLink("Comment", "Index", "Comment") |
-                        <a href="https://stackoverflow.com/questions/357929/is-it-important-to-unit-test-a-constructor">Is it important to unit test a constructor? (check link)</a>
-                </div>
-
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">                            
-                        </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
                     </div>
                 </div>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 
 <div class="container">
     @RenderBody()
