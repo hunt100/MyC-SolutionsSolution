@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyWebApplication1.Areas.Identity.Data;
 using MyWebApplication1.Data;
 using MyWebApplication1.Services;
 
@@ -19,9 +20,14 @@ namespace MyWebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => { options.UseSqlite("Filename=movies.db"); });
+//            services.AddDbContext<MyWebApplication1IdentityDbContext>(options =>
+//                {
+//                    options.UseSqlite("Filename=movies_user.db");
+//                });
             services.AddMvc();
             services.AddScoped<LikeService>();
             services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +38,9 @@ namespace MyWebApplication1
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -39,7 +48,7 @@ namespace MyWebApplication1
                     template: "{controller=Hello}/{action=Index}/{id?}");
             });
             
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             //app.Run(async (context) =>
             //{
