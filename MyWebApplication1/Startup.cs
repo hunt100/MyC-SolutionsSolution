@@ -24,7 +24,12 @@ namespace MyWebApplication1
 //                {
 //                    options.UseSqlite("Filename=movies_user.db");
 //                });
-            services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(20);
+            });
             services.AddScoped<LikeService>();
             services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddAuthentication();
@@ -37,17 +42,17 @@ namespace MyWebApplication1
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Hello}/{action=Index}/{id?}");
             });
-            
             //app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             //app.Run(async (context) =>

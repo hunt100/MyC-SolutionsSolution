@@ -1,0 +1,31 @@
+@model MyWebApplication1.Views.Hello.About
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>About index page</title>
+</head>
+<body>
+<div>
+    @{
+        if (@ViewData["usersession"] == null)
+        {
+            <h3>You are not registered.</h3>
+        }
+        else
+        {
+            <h3>Welcome, @ViewData["usersession"]</h3>  
+        }
+    }
+    
+    @{ 
+        if (TempData["tempStatus"] != null)
+        {
+            <h3>Info: @TempData["tempStatus"]</h3>
+        }
+    
+    }
+</div>
+</body>
+</html>
