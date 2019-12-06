@@ -14,7 +14,14 @@ namespace MyWebApplication1
         // GET: /<controller>/
         public IActionResult Index()
         {
-            HttpContext.Session.SetString("username",User.Identity.Name);
+            try
+            {
+                HttpContext.Session.SetString("username", User.Identity.Name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error occured" + e);
+            }
             TempData["tempStatus"] = "TEMP CREATED";
             return View();
         }
