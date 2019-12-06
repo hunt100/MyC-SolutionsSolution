@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyWebApplication1.Areas.Identity.Data;
 using MyWebApplication1.Data;
+using MyWebApplication1.Hubs;
 using MyWebApplication1.Services;
 
 namespace MyWebApplication1
@@ -19,6 +21,7 @@ namespace MyWebApplication1
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             services.AddDbContext<DataContext>(options => { options.UseSqlite("Filename=movies.db"); });
 //            services.AddDbContext<MyWebApplication1IdentityDbContext>(options =>
 //                {
@@ -47,6 +50,9 @@ namespace MyWebApplication1
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseSession();
+
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chatHub"); });
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
