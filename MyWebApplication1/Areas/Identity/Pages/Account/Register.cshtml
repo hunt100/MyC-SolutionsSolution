@@ -1,0 +1,60 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="limiter">
+
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <span class="login100-form-logo">
+                    <i class="zmdi zmdi-landscape"></i>
+                </span>
+
+                <span class="login100-form-title p-b-34 p-t-27">
+                </span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="wrap-input100 validate-input form-group">
+                                <label asp-for="Input.Email"></label>
+                                <input asp-for="Input.Email" class="input100 form-control"/>
+                                <span asp-validation-for="Input.Email" class="focus-input100 text-danger"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="col-12">
+                            <div class="wrap-input100 validate-input form-group">
+                                <label asp-for="Input.Password"></label>
+                                <input asp-for="Input.Password" class="input100 form-control"/>
+                                <span asp-validation-for="Input.Password" class="focus-input100 text-danger"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="col-12">
+                            <div class="wrap-input100 validate-input form-group">
+                                <label asp-for="Input.ConfirmPassword"></label>
+                                <input asp-for="Input.ConfirmPassword" class="input100 form-control"/>
+                                <span asp-validation-for="Input.ConfirmPassword" class="focus-input100 text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="container-login100-form-btn form-group">
+                                <button type="submit" class="login100-form-btn btn btn-primary">Register&nbsp;<i class="fas fa-sign-in-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

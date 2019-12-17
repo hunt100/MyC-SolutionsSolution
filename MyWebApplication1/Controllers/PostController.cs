@@ -11,7 +11,7 @@ using MyWebApplication1.Models.Movies;
 
 namespace MyWebApplication1.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Role_amidn")]
     public class PostController : Controller
     {
         private readonly DataContext _context;

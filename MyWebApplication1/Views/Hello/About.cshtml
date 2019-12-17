@@ -1,13 +1,15 @@
 @model MyWebApplication1.Views.Hello.About
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>About index page</title>
-</head>
-<body>
 <div>
+    @{ 
+            if (TempData["tempStatus"] != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong>Info:</strong> @TempData["tempStatus"]
+                </div>
+            }
+        
+        }
     @{
         if (@ViewData["usersession"] == null)
         {
@@ -15,17 +17,38 @@
         }
         else
         {
-            <h3>Welcome, @ViewData["usersession"]</h3>  
+            <h3>Welcome, @ViewData["usersession"]</h3>
         }
     }
-    
-    @{ 
-        if (TempData["tempStatus"] != null)
-        {
-            <h3>Info: @TempData["tempStatus"]</h3>
-        }
-    
-    }
+
+
 </div>
-</body>
-</html>
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" class="form-control" placeholder="Your name"/></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" class="form-control" placeholder="Your text"/></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Try websockets" class="btn btn-success btn-block"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul class="list-group" id="messagesList"></ul>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

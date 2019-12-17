@@ -13,6 +13,7 @@ using MyWebApplication1.Models;
 
 namespace MyWebApplication1.Controllers
 {
+    [Authorize(Roles = "Role_amidn")]
     public class UserController : Controller
     {
         private readonly DataContext _context;

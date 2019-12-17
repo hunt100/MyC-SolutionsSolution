@@ -23,7 +23,7 @@ namespace MyWebApplication1
                 Console.WriteLine("Error occured" + e);
             }
             TempData["tempStatus"] = "TEMP CREATED";
-            return View();
+            return View("Index2");
         }
 
         public IActionResult About()

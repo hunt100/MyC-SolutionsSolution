@@ -2,12 +2,14 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyWebApplication1.Areas.Identity.Data;
 
 namespace MyWebApplication1.Areas.Controllers
 {
+    [Authorize]
     public class IdentityUserController : Controller
     {
         private readonly MyWebApplication1IdentityDbContext _secContext;

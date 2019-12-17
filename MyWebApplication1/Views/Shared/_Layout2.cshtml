@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light-bootstrap-dashboard.css"/>
+    <link rel="stylesheet" href="~/lib/fontawesome-free-5.12.0-web/css/all.min.css">
+    @* <link rel="stylesheet" href="~/css/style.css"> *@
+    <title>Landing index page</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue">
+
+
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <h4 class="simple-text">
+                    C#Project Dashboard
+                </h4>
+            </div>
+   @* <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li> *@
+            <ul class="nav">
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Hello" ? "active" : "")">
+                    <a href="/Hello/About">
+                        <i class="fas fa-home"></i>
+                        <p>Home page &nbsp; &nbsp; </p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Comment" ? "active" : "")">
+                    <a href="/Comment/Index">
+                        <i class="fas fa-comment"></i>
+                        <p>CRUD Comments &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+               <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Like" ? "active" : "")">
+                    <a href="/Like/Index">
+                        <i class="fas fa-thumbs-up"></i>
+                        <p>CRUD Likes &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")">
+                    <a href="/Post/Index">
+                        <i class="fas fa-sticky-note"></i>
+                        <p>CRUD Posts &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Tag" ? "active" : "")">
+                    <a href="/Tag/Index">
+                        <i class="fas fa-tags"></i>
+                        <p>CRUD Tags &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Photo" ? "active" : "")">
+                    <a href="/Photo/Index">
+                        <i class="fas fa-images"></i>
+                        <p>CRUD Photos &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "User" ? "active" : "")">
+                    <a href="/User/Index">
+                        <i class="fas fa-user"></i>
+                        <p>CRUD MyUser &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "active" : "")">
+                    <a href="/Profile/Index">
+                        <i class="fas fa-user-circle"></i>
+                        <p>CRUD Profile &nbsp; &nbsp;</p>
+                    </a>
+                    </li>
+                
+                <li>
+                    <a href="/IdentityUser">
+                        <i class="fas fa-user-check"></i>
+                        <p>Get Admin Role &nbsp; &nbsp;</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+            <nav class="navbar navbar-expand-lg navbar-default navbar-fixed navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href=""><i class="fas fa-chart-line"></i>Project Dashboard</a>
+                    <partial name="_LoginPartial"/>
+                </div>
+            </nav>
+    
+    <div class="content">
+    @RenderBody()
+</div>
+
+<footer class="footer">
+    <div class="container-fluid bg-dark">
+        <div class="row">
+            <div class="col text-center py-4">
+                <h3 class="text-light"><span class="text-danger">C#</span>PROJECT</h3>
+                <p class="text-light">Copyright &copy; 2019-2019</p>
+            </div>
+            </div>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!--  Charts Plugin -->
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="~/lib/bootstrap/dist/js/bootstrap-notify.js"></script>
+@RenderSection("Scripts", required: false)</div></div>
+</body>
+</html>

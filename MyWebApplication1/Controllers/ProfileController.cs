@@ -11,6 +11,7 @@ using MyWebApplication1.Models;
 
 namespace MyWebApplication1.Controllers
 {
+    [Authorize(Roles = "Role_amidn")]
     public class ProfileController : Controller
     {
         private readonly DataContext _context;
@@ -21,7 +22,6 @@ namespace MyWebApplication1.Controllers
         }
 
         // GET: Profile
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var dataContext = _context.Profiles.Include(p => p.User);
